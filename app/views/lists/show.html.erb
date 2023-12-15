@@ -1,17 +1,63 @@
-<h1>SHOW LIST</h1>
+<% if @list.image.attached? %>
+  <div class="banner banner-img" style="background-image: url('<%= cl_image_path @list.image.key %>')">
+<% else %>
+  <div class="banner banner-img" style="background-image: url(https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);>
+<% end %>
+  <div class="container-banner d-flex flex-column align-items-center justify-content-center h-100">
+    <h1 class="text-center pb-3">LETTERBOX ON A BUDGET</h1>
+    <h3 class="text-center">Add a movie</h3>
+  </div>
+</div>
 
-<%= @list.name %>
-<%= link_to 'Add movie', new_list_bookmark_path(@list) %>
-<ul>
-  <% @reviews.each do |review| %>
-  <li><%= review.comment %></li>
-  <% end %>
-</ul>
 
-<ul>
+<div class="container p-5">
+
+  <div class="cards-container d-flex align-items-center justify-content-center  ">
   <% @list.bookmarks.each do |bookmark| %>
-  <li><%= bookmark.movie.title %></li>
-  <li><%= bookmark.comment %></li>
-  <li><%= link_to 'Delete', bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} %></li>
+      <div class="card-movie m-2">
+        <div class="card-inner">
+          <div class="card-front d-flex flex-column shadow justify-content-center align-items-center" style="background-image: url(https://image.tmdb.org/t/p/w500/<%= bookmark.movie.poster_url %>)">
+            <p class="fw-bold"><%= bookmark.movie.title %></p>
+            <p class="fst-italic">"<%= bookmark.comment %>"</p>
+          </div>
+            <div class="card-back">
+              <p class="overview p-3"><%= bookmark.movie.overview %></p>
+            </div>
+        </div>
+      </div>
   <% end %>
-</ul>
+  </div>
+
+  <div class="d-flex justify-content-between mt-5 w-100">
+    <div class="container p-5 w-50 d-flex flex-column border border-dark rounded-form me-3">
+      <h2>Add a movie!</h2>
+      <%= simple_form_for [@list, @bookmark] do |f| %>
+        <%= f.input :comment, placeholder: "Incredible movie..." %>
+        <%= f.association :movie %>
+        <%= f.button :submit, value: "Add movie", class:"justify-content-center align-items-center mx-auto" %>
+      <% end %>
+    </div>
+    <div class="container p-5 w-50 d-flex flex-column border border-dark rounded-form">
+      <h2>Add a Review!</h2>
+      <%= simple_form_for [@list, @review] do |f| %>
+      <%= f.input :comment, class:"border-dark" %>
+      <%= f.button :submit %>
+      <% end %>
+    </div>
+  </div>
+
+
+  <h1 class="text-center mt-5 mb-3 text-dark">Reviews of the <%= @list.name %> list</h1>
+      <div class="row">
+      <% @reviews.each do |review| %>
+          <div class="col-sm-6 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><%= @list.name %></h5>
+                <p class="card-text"><%= review.comment %></p>
+              </div>
+            </div>
+          </div>
+      <% end %>
+      </div>
+</div>

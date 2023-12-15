@@ -1,18 +1,24 @@
 <div class="banner banner-img" style="background-image: url(https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
   <div class="container-banner d-flex flex-column align-items-center justify-content-center h-100">
-    <h1 class="text-center pb-3">TEMU'S LETTERBOX</h1>
+    <h1 class="text-center pb-3">LETTERBOX ON A BUDGET</h1>
     <h3 class="text-center">Start saving movies</h3>
   </div>
 </div>
 
+<div class="text-center">
+  <%= link_to 'Create a new list', new_list_path, class:"btn mt-5 align-items-center justify-content-center" %>
+</div>
 
 <div class="cards-container d-flex p-5 text-center">
     <% @lists.each do |list| %>
-      <div class="card-category m-3" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://cdn2.tfx.company/images/clickwallpapers-The%20Office-img1.jpg)">
-        <%= list.name %>
+    <% if list.image.attached? %>
+      <div class="card-category m-3" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= cl_image_path list&.image&.key %>); background-size: cover; background-position: center;"">
+        <%= link_to list.name, list_path(list), class:"text-light text-decoration-none" %>
       </div>
+      <% else %>
+        <div class="card-category m-3">
+        <%= link_to list.name, list_path(list), class:"text-light text-decoration-none" %>
+      </div>
+      <% end %>
     <% end %>
 </div>
-  <div class="text-center">
-    <%= link_to 'Create a new list', new_list_path, class:"btn btn-primary border rounded mb-5 align-items-center justify-content-center" %>
-  </div>
