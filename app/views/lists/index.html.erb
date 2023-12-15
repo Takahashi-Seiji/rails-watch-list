@@ -1,9 +1,18 @@
-<h1>Lists#index</h1>
+<div class="banner banner-img" style="background-image: url(https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
+  <div class="container-banner d-flex flex-column align-items-center justify-content-center h-100">
+    <h1 class="text-center pb-3">TEMU'S LETTERBOX</h1>
+    <h3 class="text-center">Start saving movies</h3>
+  </div>
+</div>
 
-<ul>
-  <% @lists.each do |list| %>
-  <li><%= list.name %></li>
-  <% end %>
-</ul>
 
-<button><%= link_to 'Create a new list', new_list_path %></button>
+<div class="cards-container d-flex p-5 text-center">
+    <% @lists.each do |list| %>
+      <div class="card-category m-3" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://cdn2.tfx.company/images/clickwallpapers-The%20Office-img1.jpg)">
+        <%= list.name %>
+      </div>
+    <% end %>
+</div>
+  <div class="text-center">
+    <%= link_to 'Create a new list', new_list_path, class:"btn btn-primary border rounded mb-5 align-items-center justify-content-center" %>
+  </div>
